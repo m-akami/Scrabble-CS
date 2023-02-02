@@ -1,0 +1,69 @@
+// Plan for basic Scrabble game in C#
+
+// Step 1: Define a Scrabble class
+class Scrabble
+{
+  // Step 2: Initialize variables for player score, tile rack, and available letters
+  int playerScore;
+  string tileRack;
+  string availableLetters;
+  
+  // Step 3: Method to add a word to the tile rack
+  public void AddWord(string word)
+  {
+    // Step 3a: Check if the word can be made from the available letters
+    if (IsWordValid(word, availableLetters))
+    {
+      // Step 3b: If so, add the word to the tile rack
+      tileRack += word;
+      // Step 3c: Remove the letters used from the available letters
+      availableLetters = RemoveLetters(word, availableLetters);
+      // Step 3d: Update the player's score
+      playerScore += CalculateScore(word);
+    }
+  }
+  
+  // Step 4: Method to check if a word can be made from the available letters
+  private bool IsWordValid(string word, string available)
+  {
+    // Step 4a: Check each letter in the word against the available letters
+    foreach (char letter in word)
+    {
+      // Step 4b: If a letter is not found in the available letters, return false
+      if (!available.Contains(letter))
+      {
+        return false;
+      }
+    }
+    // Step 4c: If all letters are found, return true
+    return true;
+  }
+  
+  // Step 5: Method to remove letters used from the available letters
+  private string RemoveLetters(string word, string available)
+  {
+    // Step 5a: Loop through each letter in the word
+    foreach (char letter in word)
+    {
+      // Step 5b: Remove the first instance of the letter from the available letters
+      available = available.Remove(available.IndexOf(letter), 1);
+    }
+    // Step 5c: Return the updated available letters
+    return available;
+  }
+  
+  // Step 6: Method to calculate the score
+  private int CalculateScore(string word)
+  {
+    // Step 6a: Initialize a score variable
+    int score = 0;
+    // Step 6b: Loop through each letter in the word
+    foreach (char letter in word)
+    {
+      // Step 6c: Add the score of the letter to the score
+      score += letterScores[letter];
+    }
+    // Step 6d: Return the score
+    return score;
+  }
+}
